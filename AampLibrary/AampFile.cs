@@ -17,7 +17,7 @@ namespace Nintendo.Aamp
         //
         #region Expand
 
-        internal AampFile()
+        public AampFile()
         {
             ParameterIOVersion = 0;
             ParameterIOType = "xml";

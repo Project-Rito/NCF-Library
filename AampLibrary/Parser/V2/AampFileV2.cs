@@ -420,7 +420,8 @@ namespace Nintendo.Aamp.Parser
                     var curves = (Curve[])entry.Value;
                     for (int i = 0; i < curveAmount; i++)
                     {
-                        writer.Write(curves[i].ValueUints);
+                        writer.Write(curves[i].NumUses);
+                        writer.Write((uint)curves[i].CurveType);
                         writer.Write(curves[i].ValueFloats);
                     }
                     break;

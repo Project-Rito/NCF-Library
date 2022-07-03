@@ -11,8 +11,18 @@ namespace Nintendo.Aamp
             Data = (data_string == "''" || data_string == "\"\"") ? Array.Empty<byte>() : data;
             MaxValue = maxValue;
         }
+        public StringEntry(string text, int maxValue)
+        {
+            Data = (text == "''" || text == "\"\"") ? Array.Empty<byte>() : EncodeType.GetBytes(text);
+            MaxValue = maxValue;
+        }
         public StringEntry(byte[] data) => Data = data;
         public StringEntry(string text) => Data = (text == "''" || text == "\"\"") ? Array.Empty<byte>() : EncodeType.GetBytes(text);
+
+        public StringEntry()
+        {
+            Data = Array.Empty<byte>();
+        }
 
         public Encoding EncodeType { get; set; } = Encoding.UTF8;
         private int MaxValue { get; set; } = -1;

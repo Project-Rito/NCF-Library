@@ -287,7 +287,8 @@ namespace Nintendo.Aamp
 
                 curves[i] = new Curve()
                 {
-                    ValueUints = valueUints.ToArray(),
+                    NumUses = valueUints[0],
+                    CurveType = (CurveType)valueUints[1],
                     ValueFloats = valueFloats.ToArray(),
                 };
             }
@@ -415,7 +416,7 @@ namespace Nintendo.Aamp
         {
             string[] values = new string[Num];
             for (int i = 0; i < values.Length; i++)
-                values[i] = $"{WriteUints(curves[i].ValueUints)},{WriteFloats(curves[i].ValueFloats)}";
+                values[i] = $"{curves[i].NumUses},{curves[i].CurveType},{WriteFloats(curves[i].ValueFloats)}";
 
             return $"!curve{Num} [{string.Join(",", values)}]";
         }

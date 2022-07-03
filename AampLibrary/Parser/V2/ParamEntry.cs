@@ -81,7 +81,8 @@ namespace Nintendo.Aamp.Parser
                             for (int i = 0; i < curveAmount; i++)
                             {
                                 curves[i] = new Curve {
-                                    ValueUints = reader.ReadUInt32s(2),
+                                    NumUses = reader.ReadUInt32(),
+                                    CurveType = (CurveType)reader.ReadUInt32(),
                                     ValueFloats = reader.ReadSingles(30)
                                 };
                             }

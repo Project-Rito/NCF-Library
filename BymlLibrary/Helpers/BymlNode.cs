@@ -90,6 +90,38 @@ namespace Nintendo.Byml
             type = NodeType.Double;
         }
 
+        public dynamic GetDynamic()
+        {
+            switch (Type)
+            {
+                case NodeType.Int:
+                    return union.Int;
+                case NodeType.Float:
+                    return union.Float;
+                case NodeType.UInt:
+                    return union.UInt;
+                case NodeType.String:
+                    return union.String;
+                case NodeType.Bool:
+                    return union.Bool;
+                case NodeType.Hash:
+                    return dict.ToDictionary(x => x.Key, x => x.Value.GetDynamic());
+                case NodeType.Array:
+                    return array.Select(x => x.GetDynamic()).ToList();
+                case NodeType.Double:
+                    return union.Double;
+                case NodeType.Int64:
+                    return union.Int64;
+                case NodeType.UInt64:
+                    return union.UInt64;
+                case NodeType.Binary:
+                    return union.Binary;
+                case NodeType.StringArray:
+                    return str_array;
+            }
+            return null;
+        }
+
         public static bool operator ==(BymlNode a, BymlNode b) => a.Equals(b);
         public static bool operator !=(BymlNode a, BymlNode b) => !a.Equals(b);
 
