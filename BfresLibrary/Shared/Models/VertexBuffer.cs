@@ -161,7 +161,7 @@ namespace Nintendo.Bfres
         {
             //Swap existing byte orders
             VertexBufferHelper helper = new VertexBufferHelper(this, endian);
-            helper.endian = target;
+            helper.Endian = target;
 
             var newBuffer = helper.ToVertexBuffer();
             this.Buffers = new List<Buffer>();

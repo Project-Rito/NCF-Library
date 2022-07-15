@@ -21,7 +21,7 @@ namespace Nintendo.Bfres.Helpers
         /// </summary>
         public VertexBufferHelper()
         {
-            endian = Endian.System;
+            Endian = Endian.System;
             Attributes = new List<VertexBufferHelperAttrib>();
         }
 
@@ -31,11 +31,11 @@ namespace Nintendo.Bfres.Helpers
         /// to system byte order.
         /// </summary>
         /// <param name="vertexBuffer">The <see cref="VertexBuffer"/> to initially read data from.</param>
-        /// <param name="endian">The <see cref="endian"/> in which vertex data is available. <c>null</c> to use
+        /// <param name="endian">The <see cref="Endian"/> in which vertex data is available. <c>null</c> to use
         /// system byte order.</param>
         public VertexBufferHelper(VertexBuffer vertexBuffer, Endian? endian = null)
         {
-            endian = endian ?? Endian.System;
+            Endian = endian ?? Endian.System;
             VertexSkinCount = vertexBuffer.VertexSkinCount;
 
             Attributes = new List<VertexBufferHelperAttrib>(vertexBuffer.Attributes.Count);
@@ -55,11 +55,11 @@ namespace Nintendo.Bfres.Helpers
         // ---- PROPERTIES ---------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Gets or sets the <see cref="endian"/> in which vertex data will be stored when calling
+        /// Gets or sets the <see cref="Endian"/> in which vertex data will be stored when calling
         /// <see cref="ToVertexBuffer()"/>. This should be the same as the remainder of the <see cref="BfresFile"/> in
         /// which it will be stored.
         /// </summary>
-        public Endian endian { get; set; }
+        public Endian Endian { get; set; }
 
         /// <summary>
         /// Gets or sets the number of bones influencing the vertices stored in the buffer. 0 influences equal
@@ -225,7 +225,7 @@ namespace Nintendo.Bfres.Helpers
             Buffer buffer = vertexBuffer.Buffers[attrib.BufferIndex];
             using (BinaryStream reader = new BinaryStream(new MemoryStream(buffer.Data[0])))
             {
-                reader.ByteConverter = ByteConverter.GetConverter(endian);
+                reader.ByteConverter = ByteConverter.GetConverter(Endian);
 
                 // Get a conversion callback transforming the raw data into a Vector4F instance.
                 Func<BinaryStream, Vector4F> callback = reader.ReadGX2AttribCallback(attrib.Format);
@@ -252,7 +252,7 @@ namespace Nintendo.Bfres.Helpers
             byte[] raw = new byte[length];
             using (BinaryStream writer = new BinaryStream(new MemoryStream(raw, true)))
             {
-                writer.ByteConverter = ByteConverter.GetConverter(endian);
+                writer.ByteConverter = ByteConverter.GetConverter(Endian);
 
                 for (int v = 0; v < helperAttribs[0].Data.Length; v++)
                 {
@@ -277,7 +277,7 @@ namespace Nintendo.Bfres.Helpers
             byte[] raw = new byte[helperAttrib.Data.Length * helperAttrib.Stride];
             using (BinaryStream writer = new BinaryStream(new MemoryStream(raw, true)))
             {
-                writer.ByteConverter = ByteConverter.GetConverter(endian);
+                writer.ByteConverter = ByteConverter.GetConverter(Endian);
 
                 // Get a conversion callback transforming the Vector4F instances into raw data.
                 Action<BinaryStream, Vector4F> callback = writer.WriteGX2AttribCallback(helperAttrib.Format);
