@@ -384,13 +384,11 @@ namespace Nintendo.Bfres
             loader.ReadUInt32(); 
             int numNodes = loader.ReadInt32(); // Excludes root node.
 
-            int i = 0;
             // Read the nodes including the root node.
-            List<Node> nodes = new List<Node>();
-            for (; numNodes >= 0; numNodes--)
+            Node[] nodes = new Node[numNodes + 1];
+            for (int i = 0; i <= numNodes; i++)
             {
-                nodes.Add(ReadNode(loader));
-                i++;
+                nodes[i] = ReadNode(loader);
             }
             _nodes = nodes;
         }
